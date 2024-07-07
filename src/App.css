@@ -41,6 +41,12 @@ button {
   padding: 0.5rem;
 }
 
+.landing-button {
+    margin: 0rem 1rem 1.5rem;
+    align-self: center;
+    width: fit-content;
+}
+
 .error-message {
   color: red;
   margin-top: -0.8rem;

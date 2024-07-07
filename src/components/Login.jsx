@@ -16,7 +16,7 @@ export default function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "home";
+  const from = location.state?.from?.pathname || "/landing";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,11 +34,12 @@ export default function Login() {
     try {
       const response = await axios.post(LOGIN_URL, { email, password });
       const accessToken = response?.data?.accessToken;
-      setAuth({ email, password, accessToken });
+      const username = response?.data?.user?.username;
+      setAuth({ email, password, accessToken, username });
       setEmail("");
       setPassword("");
       setLoading(false)
-      navigate(from, { replace: true });
+      navigate(from);
     } catch (err) {
       setLoading(false)
       if (!err?.response) {
