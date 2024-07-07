@@ -1,0 +1,47 @@
+body {
+  color: orangered;
+  font-family: "Times New Roman", Times, serif;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    margin-top: 2rem;
+    width: 36rem;
+    border: solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    padding: 10px;
+    align-self: center;
+    width: 28rem;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+input, button {
+    text-align: center;
+    margin: 0.4rem 0 1.2rem;
+    padding: 0.5rem;
+}
+
+.check {
+  color: green;
+}
+
+.cross {
+    color: red;
+}

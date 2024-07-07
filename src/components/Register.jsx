@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "../api/axios";
+import {faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -65,16 +68,24 @@ export default function Register() {
   return (
     <>
       {success ? (
-        <section>
+        <section className="flex-container">
+          <div className="container">
           <h1>Success!</h1>
-          <p>Sign In</p>
+          <Link to={"/login"}>Sign In</Link>
+          </div>
         </section>
       ) : (
-        <section>
+        <section className="flex-container">
+          <div className="container">
           <p>{errorMsg}</p>
           <h1>Register</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username">Username:&nbsp; 
+              {username ? <span>
+                <FontAwesomeIcon icon={faCheck} className="check"/>
+              </span>
+              : <></>}
+            </label>
             <input
               type="text"
               id="username"
@@ -84,7 +95,16 @@ export default function Register() {
               required
             />
 
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email">Email:&nbsp;
+            {validEmail ? <span>
+                <FontAwesomeIcon icon={faCheck} className="check"/>
+              </span>
+              : <></>}
+              {!validEmail && email ? <span>
+                <FontAwesomeIcon icon={faTimes} className="cross"/>
+              </span>
+              : <></>}
+            </label>
             <input
               type="email"
               id="email"
@@ -101,7 +121,16 @@ export default function Register() {
               <></>
             )}
 
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Password:&nbsp;
+            {validPassword ? <span>
+                <FontAwesomeIcon icon={faCheck} className="check"/>
+              </span>
+              : <></>}
+              {!validPassword && password ? <span>
+                <FontAwesomeIcon icon={faTimes} className="cross"/>
+              </span>
+              : <></>}
+            </label>
             <input
               type="password"
               id="password"
@@ -124,7 +153,16 @@ export default function Register() {
               <></>
             )}
 
-            <label htmlFor="confirm_password">Confirm Password:</label>
+            <label htmlFor="confirm_password">Confirm Password:&nbsp;
+            {validPasswordMatch && passwordMatch ? <span>
+                <FontAwesomeIcon icon={faCheck} className="check"/>
+              </span>
+              : <></>}
+              {!validPasswordMatch && passwordMatch ? <span>
+                <FontAwesomeIcon icon={faTimes} className="cross"/>
+              </span>
+              : <></>}
+            </label>
             <input
               type="password"
               id="confirm_password"
@@ -157,11 +195,9 @@ export default function Register() {
           <p>
             Already registered?
             <br />
-            <span>
-              {/*put router link here*/}
-              Sign In
-            </span>
+            <Link to={"/login"}>Sign In</Link>
           </p>
+          </div>
         </section>
       )}
     </>

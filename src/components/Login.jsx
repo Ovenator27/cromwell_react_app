@@ -1,11 +1,17 @@
-import { useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useState, useEffect } from "react";
 import axios from "../api/axios";
+import useAuth from "../hooks/useAuth";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const LOGIN_URL = "/users/login";
 
 export default function Login() {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,9 +26,10 @@ export default function Login() {
     try {
       const response = await axios.post(LOGIN_URL, { email, password });
       const accessToken = response?.data?.accessToken;
-      setAuth({ email, password, accessToken })
+      setAuth({ email, password, accessToken });
       setEmail("");
       setPassword("");
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrorMessage("No Server Response");
@@ -37,7 +44,8 @@ export default function Login() {
   };
 
   return (
-    <section>
+    <section className="flex-container">
+      <div className="container">
       <h1>Sign In</h1>
       <p>{errorMessage}</p>
       <form onSubmit={handleSubmit}>
@@ -61,8 +69,9 @@ export default function Login() {
       </form>
       <p>
         Need an Account? <br />
-        <span>Sign Up</span>
+        <Link to={'/register'}>Sign Up</Link>
       </p>
+      </div>
     </section>
   );
 }
