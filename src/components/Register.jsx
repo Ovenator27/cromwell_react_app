@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
-import {faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons"
+import {
+  faCheck,
+  faTimes,
+  faCircleInfo
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -10,7 +14,6 @@ const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const REGISTER_URL = "/users/register";
 
 export default function Register() {
-
   const [username, setUsername] = useState("");
 
   const [email, setEmail] = useState("");
@@ -39,16 +42,17 @@ export default function Register() {
   }, [password, passwordMatch]);
 
   useEffect(() => {
-    setErrorMsg('')
-  }, [username, email, password, passwordMatch])
+    setErrorMsg("");
+  }, [username, email, password, passwordMatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        REGISTER_URL,
-        { username, email, password }
-      );
+      const response = await axios.post(REGISTER_URL, {
+        username,
+        email,
+        password,
+      });
       setSuccess(true);
       setUsername("");
       setEmail("");
@@ -70,133 +74,157 @@ export default function Register() {
       {success ? (
         <section className="flex-container">
           <div className="container">
-          <h1>Success!</h1>
-          <Link to={"/login"}>Sign In</Link>
+            <h1>Success!</h1>
+            <Link to={"/login"}>Sign In</Link>
           </div>
         </section>
       ) : (
         <section className="flex-container">
           <div className="container">
-          <p>{errorMsg}</p>
-          <h1>Register</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:&nbsp; 
-              {username ? <span>
-                <FontAwesomeIcon icon={faCheck} className="check"/>
-              </span>
-              : <></>}
-            </label>
-            <input
-              type="text"
-              id="username"
-              autoComplete="off"
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
-              required
-            />
+            <h1>Register</h1>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="username">
+                Username:&nbsp;
+                {username ? (
+                  <span>
+                    <FontAwesomeIcon icon={faCheck} className="check" />
+                  </span>
+                ) : (
+                  <></>
+                )}
+              </label>
+              <input
+                type="text"
+                id="username"
+                autoComplete="off"
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+                required
+              />
 
-            <label htmlFor="email">Email:&nbsp;
-            {validEmail ? <span>
-                <FontAwesomeIcon icon={faCheck} className="check"/>
-              </span>
-              : <></>}
-              {!validEmail && email ? <span>
-                <FontAwesomeIcon icon={faTimes} className="cross"/>
-              </span>
-              : <></>}
-            </label>
-            <input
-              type="email"
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              required
-              onFocus={() => setEmailFocus(true)}
-              onBlur={() => setEmailFocus(false)}
-            />
+              <label htmlFor="email">
+                Email:&nbsp;
+                {validEmail ? (
+                  <span>
+                    <FontAwesomeIcon icon={faCheck} className="check" />
+                  </span>
+                ) : (
+                  <></>
+                )}
+                {!validEmail && email ? (
+                  <span>
+                    <FontAwesomeIcon icon={faTimes} className="cross" />
+                  </span>
+                ) : (
+                  <></>
+                )}
+              </label>
+              <input
+                type="email"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
+                onFocus={() => setEmailFocus(true)}
+                onBlur={() => setEmailFocus(false)}
+              />
 
-            {emailFocus && !validEmail ? (
-              <p>Please enter a valid email address</p>
-            ) : (
-              <></>
-            )}
+              {emailFocus && !validEmail ? (
+                <p className="info-message"><FontAwesomeIcon icon={faCircleInfo}/> Please enter a valid email address</p>
+              ) : (
+                <></>
+              )}
 
-            <label htmlFor="password">Password:&nbsp;
-            {validPassword ? <span>
-                <FontAwesomeIcon icon={faCheck} className="check"/>
-              </span>
-              : <></>}
-              {!validPassword && password ? <span>
-                <FontAwesomeIcon icon={faTimes} className="cross"/>
-              </span>
-              : <></>}
-            </label>
-            <input
-              type="password"
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              required
-              onFocus={() => setPasswordFocus(true)}
-              onBlur={() => setPasswordFocus(false)}
-            />
+              <label htmlFor="password">
+                Password:&nbsp;
+                {validPassword ? (
+                  <span>
+                    <FontAwesomeIcon icon={faCheck} className="check" />
+                  </span>
+                ) : (
+                  <></>
+                )}
+                {!validPassword && password ? (
+                  <span>
+                    <FontAwesomeIcon icon={faTimes} className="cross" />
+                  </span>
+                ) : (
+                  <></>
+                )}
+              </label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                required
+                onFocus={() => setPasswordFocus(true)}
+                onBlur={() => setPasswordFocus(false)}
+              />
 
-            {passwordFocus && !validPassword ? (
-              <p>
-                8 to 24 characters.
-                <br />
-                Must include at least one uppercase and lowercase letter, a
-                number and a special character.
-                <br />
-              </p>
-            ) : (
-              <></>
-            )}
+              {passwordFocus && !validPassword ? (
+                <p className="info-message"><FontAwesomeIcon icon={faCircleInfo}/> 8 to 24 characters.
+                  <br />
+                  Must include at least one uppercase and lowercase letter, a
+                  number and a special character.
+                  <br />
+                </p>
+              ) : (
+                <></>
+              )}
 
-            <label htmlFor="confirm_password">Confirm Password:&nbsp;
-            {validPasswordMatch && passwordMatch ? <span>
-                <FontAwesomeIcon icon={faCheck} className="check"/>
-              </span>
-              : <></>}
-              {!validPasswordMatch && passwordMatch ? <span>
-                <FontAwesomeIcon icon={faTimes} className="cross"/>
-              </span>
-              : <></>}
-            </label>
-            <input
-              type="password"
-              id="confirm_password"
-              onChange={(e) => setPasswordMatch(e.target.value)}
-              value={passwordMatch}
-              required
-              onFocus={() => setPasswordMatchFocus(true)}
-              onBlur={() => setPasswordMatchFocus(false)}
-            />
+              <label htmlFor="confirm_password">
+                Confirm Password:&nbsp;
+                {validPasswordMatch && passwordMatch ? (
+                  <span>
+                    <FontAwesomeIcon icon={faCheck} className="check" />
+                  </span>
+                ) : (
+                  <></>
+                )}
+                {!validPasswordMatch && passwordMatch ? (
+                  <span>
+                    <FontAwesomeIcon icon={faTimes} className="cross" />
+                  </span>
+                ) : (
+                  <></>
+                )}
+              </label>
+              <input
+                type="password"
+                id="confirm_password"
+                onChange={(e) => setPasswordMatch(e.target.value)}
+                value={passwordMatch}
+                required
+                onFocus={() => setPasswordMatchFocus(true)}
+                onBlur={() => setPasswordMatchFocus(false)}
+              />
 
-            {passwordMatchFocus && !validPasswordMatch ? (
-              <p>Must match password input field</p>
-            ) : (
-              <></>
-            )}
+              {passwordMatchFocus && !validPasswordMatch ? (
+                <p className="info-message"><FontAwesomeIcon icon={faCircleInfo}/> Must match password input field</p>
+              ) : (
+                <></>
+              )}
 
-            <button
-              disabled={
-                !username ||
-                !validEmail ||
-                !validPassword ||
-                !validPasswordMatch
-                  ? true
-                  : false
-              }
-            >
-              Sign Up
-            </button>
-          </form>
-          <p>
-            Already registered?
-            <br />
-            <Link to={"/login"}>Sign In</Link>
-          </p>
+              <button
+                disabled={
+                  !username ||
+                  !validEmail ||
+                  !validPassword ||
+                  !validPasswordMatch
+                    ? true
+                    : false
+                }
+              >
+                Sign Up
+              </button>
+            </form>
+              <p className="error-message">{errorMsg}</p>
+            <p>
+              Already registered?
+              <br />
+              <Link to={"/login"} className="link">Sign In</Link>
+            </p>
           </div>
         </section>
       )}

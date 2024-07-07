@@ -36,7 +36,7 @@ export default function Login() {
       } else if (err.response?.status === 400) {
         setErrorMessage("Missing Email or Password");
       } else if (err.response?.status === 401) {
-        setErrorMessage("Unauthorised");
+        setErrorMessage("Incorrect Email or Password");
       } else {
         setErrorMessage("Login Failed");
       }
@@ -47,7 +47,6 @@ export default function Login() {
     <section className="flex-container">
       <div className="container">
       <h1>Sign In</h1>
-      <p>{errorMessage}</p>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
@@ -67,9 +66,10 @@ export default function Login() {
         />
         <button>Sign In</button>
       </form>
+        <p className="error-message">{errorMessage}</p>
       <p>
         Need an Account? <br />
-        <Link to={'/register'}>Sign Up</Link>
+        <Link to={'/register'} className="link">Sign Up</Link>
       </p>
       </div>
     </section>
