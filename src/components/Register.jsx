@@ -88,7 +88,7 @@ export default function Register() {
       ) : (
         <section className="flex-container">
           <div className="container">
-            <h1>Register</h1>
+            <h1>Register Online Account</h1>
             <form onSubmit={handleSubmit}>
               <label htmlFor="username">
                 Username:&nbsp;
@@ -223,7 +223,7 @@ export default function Register() {
                     : false
                 }
               >
-                Sign Up
+                REGISTER
               </button>
             </form>
             {loading ? ( 
@@ -231,9 +231,7 @@ export default function Register() {
         : (<></>) }
               <p className="error-message">{errorMsg}</p>
             <p>
-              Already registered?
-              <br />
-              <Link to={"/login"} className="link">Sign In</Link>
+              Already registered? <Link to={"/login"} className="link">Sign In</Link>
             </p>
           </div>
         </section>

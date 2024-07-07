@@ -16,7 +16,7 @@ export default function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/landing";
+  const from = location.state?.from?.pathname || "/account";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,7 +57,7 @@ export default function Login() {
   return (
     <section className="flex-container">
       <div className="container">
-      <h1>Sign In</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
@@ -75,15 +75,14 @@ export default function Login() {
           value={password}
           required
         />
-        <button>Sign In</button>
+        <button>LOGIN</button>
       </form>
         {loading ? ( 
           <span><p>{loadingMsg}</p><FontAwesomeIcon icon={faSpinner} spin /></span> )
         : (<></>) }
         <p className="error-message">{errorMessage}</p>
       <p>
-        Need an Account? <br />
-        <Link to={'/register'} className="link">Sign Up</Link>
+        Need an Account? <Link to={'/register'} className="link">Sign Up</Link>
       </p>
       </div>
     </section>

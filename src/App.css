@@ -1,5 +1,5 @@
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .link {
@@ -21,7 +21,6 @@ body {
 .container {
   margin-top: 2rem;
   width: 36rem;
-  border: solid black;
   display: flex;
   flex-direction: column;
 }
@@ -42,9 +41,9 @@ button {
 }
 
 .landing-button {
-    margin: 0rem 1rem 1.5rem;
-    align-self: center;
-    width: fit-content;
+  margin: 0rem 1rem 1.5rem;
+  align-self: center;
+  width: fit-content;
 }
 
 .error-message {
@@ -62,4 +61,23 @@ button {
 
 .cross {
   color: red;
+}
+
+ul {
+  padding-inline-start: 0px;
+  list-style: none;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0px;
+  padding: 5px;
+  min-height: 60px;
+}
+
+#logo {
+    height: 4rem;
 }

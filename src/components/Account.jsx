@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 
-export default function Home() {
+export default function LanAccountding() {
   const {
     auth: { username, email },
     setAuth,
@@ -15,12 +15,12 @@ export default function Home() {
   return (
     <section className="flex-container">
       <div className="container">
-        <h1>Successfully signed in</h1>
+        <h1>My Account Details</h1>
         <p>Username: {username}</p>
         <p>Email: {email}</p>
         <div>
           <button className="landing-button" onClick={handleSignOut}>
-            Sign Out
+            LOG OUT
           </button>
         </div>
       </div>
