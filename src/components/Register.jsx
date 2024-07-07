@@ -4,7 +4,8 @@ import axios from "../api/axios";
 import {
   faCheck,
   faTimes,
-  faCircleInfo
+  faCircleInfo,
+  faSpinner
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,6 +15,8 @@ const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const REGISTER_URL = "/users/register";
 
 export default function Register() {
+  const [loading, setLoading] = useState(false)
+  const [loadingMsg, setLoadingMsg] = useState('')
   const [username, setUsername] = useState("");
 
   const [email, setEmail] = useState("");
@@ -47,6 +50,8 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
+    setLoadingMsg('Signing you in, please wait')
     try {
       const response = await axios.post(REGISTER_URL, {
         username,
@@ -54,11 +59,13 @@ export default function Register() {
         password,
       });
       setSuccess(true);
+      setLoading(false)
       setUsername("");
       setEmail("");
       setPassword("");
       setPasswordMatch("");
     } catch (err) {
+      setLoading(false)
       if (!err?.response) {
         setErrorMsg("No Server Response");
       } else if (err.response?.status === 409) {
@@ -219,6 +226,9 @@ export default function Register() {
                 Sign Up
               </button>
             </form>
+            {loading ? ( 
+          <span><p>{loadingMsg}</p><FontAwesomeIcon icon={faSpinner} spin /></span> )
+        : (<></>) }
               <p className="error-message">{errorMsg}</p>
             <p>
               Already registered?

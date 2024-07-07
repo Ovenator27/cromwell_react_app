@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "../api/axios";
+import {
+  faSpinner
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuth from "../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
@@ -7,10 +11,12 @@ const LOGIN_URL = "/users/login";
 
 export default function Login() {
   const { setAuth } = useAuth();
+  const [loading, setLoading] = useState(false)
+  const [loadingMsg, setLoadingMsg] = useState('')
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "home";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +28,8 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
+    setLoadingMsg('Signing you in, please wait')
 
     try {
       const response = await axios.post(LOGIN_URL, { email, password });
@@ -29,8 +37,10 @@ export default function Login() {
       setAuth({ email, password, accessToken });
       setEmail("");
       setPassword("");
+      setLoading(false)
       navigate(from, { replace: true });
     } catch (err) {
+      setLoading(false)
       if (!err?.response) {
         setErrorMessage("No Server Response");
       } else if (err.response?.status === 400) {
@@ -66,6 +76,9 @@ export default function Login() {
         />
         <button>Sign In</button>
       </form>
+        {loading ? ( 
+          <span><p>{loadingMsg}</p><FontAwesomeIcon icon={faSpinner} spin /></span> )
+        : (<></>) }
         <p className="error-message">{errorMessage}</p>
       <p>
         Need an Account? <br />

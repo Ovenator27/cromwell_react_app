@@ -3,7 +3,7 @@ body {
 }
 
 .link {
-    color: orangered;
+  color: orangered;
 }
 
 #root {
@@ -27,7 +27,7 @@ body {
 }
 
 form {
-    text-align: left;
+  text-align: left;
   padding: 10px;
   align-self: center;
   width: 28rem;
@@ -42,12 +42,12 @@ button {
 }
 
 .error-message {
-    color: red;
-    margin-top: -0.8rem;
+  color: red;
+  margin-top: -0.8rem;
 }
 
 .info-message {
-    margin-top: -0.8rem;
+  margin-top: -0.8rem;
 }
 
 .check {
