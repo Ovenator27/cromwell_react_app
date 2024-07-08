@@ -81,8 +81,8 @@ export default function Register() {
       {success ? (
         <section className="flex-container">
           <div className="container">
-            <h1>Success!</h1>
-            <Link to={"/login"}>Sign In</Link>
+            <h1>Successfully registered</h1>
+            <Link to={"/login"} className="link">Sign In</Link>
           </div>
         </section>
       ) : (
