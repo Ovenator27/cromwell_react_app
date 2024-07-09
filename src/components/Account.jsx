@@ -1,11 +1,24 @@
 import { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
+import axios from "../api/axios";
 
 export default function LanAccountding() {
   const {
-    auth: { username, email },
+    auth: { user_id },
     setAuth,
   } = useAuth();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const getUserDetails = async (user_id) => {
+      const response = await axios.get(`users/${user_id}`);
+      setUsername(response.data.user.username);
+      setEmail(response.data.user.email);
+    };
+
+    getUserDetails(user_id)
+  }, []);
 
   const handleSignOut = (e) => {
     e.preventDefault();
